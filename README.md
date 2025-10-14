@@ -1,2 +1,44 @@
 # XA-Practica1-2025
-Practica de Redes Avanzadas 2025
+Practica 1 de Redes Avanzadas 2025
+
+# Guía de instalación
+>TODO: Hacer en cuanto acabe con el proyecto paso a paso
+
+# Descripción de entornos
+>TODO: explicar en detalle, basicamente hay 2 entornos dev y pro, en dev no hay cache, en pro sí 
+# Diagrama de arquitectura del servicio
+>TODO: explicar en cuanto se acabe el proyecto pero será algo parecido a:
+## DEV
+```
+Cliente-> WEB -> BD  (y vuelta)
+```
+## PRO
+```
+ Cliente-> WEB -> Cache  (y vuelta si ya esta en cache) -> BD (y vuelta si ha llegado aqui actualizar cache)
+```
+# Resultado de pruebas y verificaciones
+
+- [ ] Deben crearse dos archivos de orquestación separados: docker-compose.dev.yml y dockercompose.prod.yml
+- [ ] Cada entorno debe disponer de su propio archivo .env con las variables de entorno
+correspondientes (puertos, credenciales, etc.).
+- [ ] Los servicios deben ejecutarse sobre una red interna de Docker donde se comuniquen la aplicación, la base de datos y la caché.
+- [ ] Solo la aplicación web podrá exponerse al exterior a través de un puerto publicado; los demás servicios permanecerán accesibles únicamente desde la red interna.
+- [ ] Todos los contenedores deberán incluir un healthcheck configurado en el docker-compose.yml o en sus Dockerfile, que permita comprobar si el servicio está activo y respondiendo correctamente.
+- [ ] El estado de salud deberá verse reflejado en la aplicación web mediante su endpoint /status.
+- El proyecto deberá implementar medidas básicas de seguridad:
+    - [ ] No incluir credenciales hardcodeadas en el código ni en los archivos YAML.
+    - [ ] Utilizar variables de entorno para contraseñas y configuración sensible.
+    - [ ] Evitar exponer puertos innecesarios.
+    - [ ] Aplicar permisos mínimos requeridos en los archivos de configuración.
+    - [ ] La automatización del despliegue es obligatoria.
+- Se deberá incluir un Makefile o script bash (setup.sh, run.sh, etc.) que permita:
+    - [ ] Construir las imágenes
+    - [ ] Levantar el entorno (make up-dev, make up-prod)
+    - [ ] Detener y limpiar (make down)
+    - [ ] La persistencia de datos deberá demostrarse insertando información en la base de datos, eliminando el contenedor y volviendo a iniciarlo, verificando que los datos se mantienen.
+
+# Explicación de los healthchecks
+>TODO: explicar
+
+# Instrucciones de uso del Makefile o script
+>TODO: Explicar

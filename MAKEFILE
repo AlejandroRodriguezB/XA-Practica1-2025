@@ -1,0 +1,25 @@
+COMPOSE_DEV=docker-compose.dev.yml
+COMPOSE_PRO=docker-compose.pro.yml
+
+# Construir imagenes dev-pro
+build-dev:
+	docker-compose -f $(COMPOSE_DEV) build
+
+build-pro:
+	docker-compose -f $(COMPOSE_PRO) build
+
+# Levantar entornos dev-pro
+up-dev:
+	docker compose -f $(COMPOSE_DEV) up -d
+
+up-prod:
+	docker compose -f $(COMPOSE_PRO) up -d
+	
+# Dentener y limpiar entornos dev-pro
+clean-dev:
+	docker-compose -f $(COMPOSE_DEV) down -v 
+	docker system prune -f
+
+clean-pro:
+	docker-compose -f $(COMPOSE_PRO) down -v 
+	docker system prune -f
