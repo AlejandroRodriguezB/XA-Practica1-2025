@@ -1,25 +1,32 @@
 COMPOSE_DEV=docker-compose.dev.yml
 COMPOSE_PRO=docker-compose.pro.yml
+DEV_ENV = .env.dev
+PRO_ENV = .env.pro
 
 # Construir imagenes dev-pro
 build-dev:
-	docker-compose -f $(COMPOSE_DEV) build
+	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) build
 
 build-pro:
-	docker-compose -f $(COMPOSE_PRO) build
+	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) build
 
 # Levantar entornos dev-pro
 up-dev:
-	docker compose -f $(COMPOSE_DEV) up -d
+	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) up -d --build
 
-up-prod:
-	docker compose -f $(COMPOSE_PRO) up -d
+up-pro:
+	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) up -d --build
 	
-# Dentener y limpiar entornos dev-pro
+# Dentener entornos dev-pro
+down-dev:
+	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) down
+
+down-pro:
+	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) down
+
+# Limpiar entornos dev-pro
 clean-dev:
-	docker-compose -f $(COMPOSE_DEV) down -v 
-	docker system prune -f
+	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) down -v --rmi local --remove-orphans
 
 clean-pro:
-	docker-compose -f $(COMPOSE_PRO) down -v 
-	docker system prune -f
+	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) down -v --rmi local --remove-orphans

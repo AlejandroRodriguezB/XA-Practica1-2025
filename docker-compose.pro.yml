@@ -1,8 +1,6 @@
-version: '3.9'
 services:
   web:
-    image: ./src/WebApi
-    env_file: .env.pro
+    build: ./WebApi
     ports:
       - "${WEB_PORT}:8080"
     environment:
@@ -23,7 +21,6 @@ services:
 
   db:
     image: postgres:18
-    env_file: .env.pro
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -43,4 +40,4 @@ networks:
     name: internal_net
 
 volumes:
-  pgdata_dev:
+  pgdata_pro:
