@@ -18,13 +18,13 @@ Cliente-> WEB -> BD  (y vuelta)
 ```
 # Resultado de pruebas y verificaciones
 
-- [ ] Deben crearse dos archivos de orquestación separados: docker-compose.dev.yml y dockercompose.prod.yml
-- [ ] Cada entorno debe disponer de su propio archivo .env con las variables de entorno
+- [x] Deben crearse dos archivos de orquestación separados: docker-compose.dev.yml y dockercompose.prod.yml
+- [X] Cada entorno debe disponer de su propio archivo .env con las variables de entorno
 correspondientes (puertos, credenciales, etc.).
-- [ ] Los servicios deben ejecutarse sobre una red interna de Docker donde se comuniquen la aplicación, la base de datos y la caché.
-- [ ] Solo la aplicación web podrá exponerse al exterior a través de un puerto publicado; los demás servicios permanecerán accesibles únicamente desde la red interna.
+- [X] Los servicios deben ejecutarse sobre una red interna de Docker donde se comuniquen la aplicación, la base de datos y la caché.
+- [X] Solo la aplicación web podrá exponerse al exterior a través de un puerto publicado; los demás servicios permanecerán accesibles únicamente desde la red interna.
 - [ ] Todos los contenedores deberán incluir un healthcheck configurado en el docker-compose.yml o en sus Dockerfile, que permita comprobar si el servicio está activo y respondiendo correctamente.
-- [ ] El estado de salud deberá verse reflejado en la aplicación web mediante su endpoint /status.
+- [X] El estado de salud deberá verse reflejado en la aplicación web mediante su endpoint /status.
 - El proyecto deberá implementar medidas básicas de seguridad:
     - [ ] No incluir credenciales hardcodeadas en el código ni en los archivos YAML.
     - [ ] Utilizar variables de entorno para contraseñas y configuración sensible.

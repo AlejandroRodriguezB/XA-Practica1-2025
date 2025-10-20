@@ -9,10 +9,10 @@ builder.Services.AddRazorPages();
 
 // Postgres config
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection"))); //Todo: add conexion to bd in appsettings.json
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
 
 // Redis config
-var redisUrl = builder.Configuration["RedisConnection"]; //Todo: add conexion to cache in appsettings.json
+var redisUrl = builder.Configuration["Redis:Connection"];
 if (!string.IsNullOrEmpty(redisUrl))
 {
     builder.Services.AddSingleton<IConnectionMultiplexer>(
