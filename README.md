@@ -4,6 +4,9 @@ Practica 1 de Redes Avanzadas 2025
 # Guía de instalación
 >TODO: Hacer en cuanto acabe con el proyecto paso a paso
 
+Check BD
+docker exec -it <id docker> psql -U <userBd> -d <nombreBd>
+
 # Descripción de entornos
 >TODO: explicar en detalle, basicamente hay 2 entornos dev y pro, en dev no hay cache, en pro sí 
 # Diagrama de arquitectura del servicio

@@ -2,31 +2,33 @@ COMPOSE_DEV=docker-compose.dev.yml
 COMPOSE_PRO=docker-compose.pro.yml
 DEV_ENV = .env.dev
 PRO_ENV = .env.pro
+DEV_PROJECT = webapi-dev
+PRO_PROJECT = webapi-pro
 
 # Construir imagenes dev-pro
 build-dev:
-	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) build
+	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) -p $(DEV_PROJECT) build
 
 build-pro:
-	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) build
+	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) -p $(PRO_PROJECT) build
 
 # Levantar entornos dev-pro
 up-dev:
-	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) up -d --build
+	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) -p $(DEV_PROJECT) up -d --build
 
 up-pro:
-	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) up -d --build
+	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) -p $(PRO_PROJECT) up -d --build
 	
 # Dentener entornos dev-pro
 down-dev:
-	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) down
+	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) -p $(DEV_PROJECT) down
 
 down-pro:
-	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) down
+	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) -p $(PRO_PROJECT) down
 
 # Limpiar entornos dev-pro
 clean-dev:
-	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) down -v --rmi local --remove-orphans
+	docker compose -f $(COMPOSE_DEV) --env-file $(DEV_ENV) -p $(DEV_PROJECT) down -v --rmi local --remove-orphans
 
 clean-pro:
-	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) down -v --rmi local --remove-orphans
+	docker compose -f $(COMPOSE_PRO) --env-file $(PRO_ENV) -p $(PRO_PROJECT) down -v --rmi local --remove-orphans
