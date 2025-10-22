@@ -5,6 +5,6 @@ namespace WebApi.Services
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        public DbSet<Item> Items => Set<Item>();
+        public DbSet<Product> Products => Set<Product>();
     }
 }
