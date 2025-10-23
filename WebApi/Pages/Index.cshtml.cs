@@ -24,17 +24,19 @@ namespace WebApi.Pages
 
         public async Task OnGetAsync()
         {
-            if (_redis is not null)
+            try
             {
-                var db = _redis.GetDatabase();
-                var cachedJson = await db.StringGetAsync(CacheKey);
-                if (cachedJson.HasValue)
+                if (_redis is not null)
                 {
-                    Products = JsonSerializer.Deserialize<List<Product>>(cachedJson.ToString()) ?? [];
-                    return;
+                    var db = _redis.GetDatabase();
+                    var cachedJson = await db.StringGetAsync(CacheKey);
+                    if (cachedJson.HasValue)
+                    {
+                        Products = JsonSerializer.Deserialize<List<Product>>(cachedJson.ToString()) ?? [];
+                        return;
+                    }
                 }
-            }
-            try {
+            
                 Products = [.. _context.Products.OrderBy(p => p.Id)];
 
                 if (_redis is not null)
@@ -59,36 +61,54 @@ namespace WebApi.Pages
                 return Page();
             }
 
-            _context.Products.Add(NewProduct);
-            await _context.SaveChangesAsync();
-
-            // invalidate cache
-            if (_redis is not null)
+            try
             {
-                var db = _redis.GetDatabase();
-                await db.KeyDeleteAsync(CacheKey);
-            }
-
-            return RedirectToPage();
-        }
-
-        public async Task<IActionResult> OnPostDeleteAsync(int id)
-        {
-            var product = await _context.Products.FindAsync(id);
-            if (product != null)
-            {
-                _context.Products.Remove(product);
+                _context.Products.Add(NewProduct);
                 await _context.SaveChangesAsync();
 
-                // invalidate cache
                 if (_redis is not null)
                 {
                     var db = _redis.GetDatabase();
                     await db.KeyDeleteAsync(CacheKey);
                 }
-            }
 
-            return RedirectToPage();
+                return RedirectToPage();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating product");
+                ModelState.AddModelError(string.Empty, "Unable to create product. Try again later.");
+                await OnGetAsync();
+                return Page();
+            }
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            try
+            {
+                var product = await _context.Products.FindAsync(id);
+                if (product != null)
+                {
+                    _context.Products.Remove(product);
+                    await _context.SaveChangesAsync();
+
+                    if (_redis is not null)
+                    {
+                        var db = _redis.GetDatabase();
+                        await db.KeyDeleteAsync(CacheKey);
+                    }
+                }
+
+                return RedirectToPage();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting product id={Id}", id);
+                ModelState.AddModelError(string.Empty, "Unable to delete product. Try again later.");
+                await OnGetAsync();
+                return Page();
+            }
         }
     }
 }
