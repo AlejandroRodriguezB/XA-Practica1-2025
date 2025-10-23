@@ -26,7 +26,7 @@ Cliente-> WEB -> BD  (y vuelta)
 correspondientes (puertos, credenciales, etc.).
 - [X] Los servicios deben ejecutarse sobre una red interna de Docker donde se comuniquen la aplicación, la base de datos y la caché.
 - [X] Solo la aplicación web podrá exponerse al exterior a través de un puerto publicado; los demás servicios permanecerán accesibles únicamente desde la red interna.
-- [ ] Todos los contenedores deberán incluir un healthcheck configurado en el docker-compose.yml o en sus Dockerfile, que permita comprobar si el servicio está activo y respondiendo correctamente.
+- [X] Todos los contenedores deberán incluir un healthcheck configurado en el docker-compose.yml o en sus Dockerfile, que permita comprobar si el servicio está activo y respondiendo correctamente.
 - [X] El estado de salud deberá verse reflejado en la aplicación web mediante su endpoint /status.
 - El proyecto deberá implementar medidas básicas de seguridad:
     - [X] No incluir credenciales hardcodeadas en el código ni en los archivos YAML.
@@ -38,7 +38,7 @@ correspondientes (puertos, credenciales, etc.).
     - [X] Construir las imágenes
     - [X] Levantar el entorno (make up-dev, make up-prod)
     - [X] Detener y limpiar (make down)
-    - [X] La persistencia de datos deberá demostrarse insertando información en la base de datos, eliminando el contenedor y volviendo a iniciarlo, verificando que los datos se mantienen.
+- [X] La persistencia de datos deberá demostrarse insertando información en la base de datos, eliminando el contenedor y volviendo a iniciarlo, verificando que los datos se mantienen.
 
 # Explicación de los healthchecks
 >TODO: explicar
