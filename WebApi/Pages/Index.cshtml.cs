@@ -20,12 +20,33 @@ namespace WebApi.Pages
         [BindProperty]
         public Product NewProduct { get; set; } = new();
 
-        //private const string CacheKey = "products:list";
+        private const string CacheKey = "products:list";
 
         public async Task OnGetAsync()
         {
+            if (_redis is not null)
+            {
+                var db = _redis.GetDatabase();
+                var cachedJson = await db.StringGetAsync(CacheKey);
+                if (cachedJson.HasValue)
+                {
+                    Products = JsonSerializer.Deserialize<List<Product>>(cachedJson.ToString()) ?? [];
+                    return;
+                }
+            }
             try {
                 Products = [.. _context.Products.OrderBy(p => p.Id)];
+
+                if (_redis is not null)
+                {
+                    var db = _redis.GetDatabase();
+                    var json = JsonSerializer.Serialize(Products);
+                    await db.StringSetAsync(
+                        CacheKey,
+                        json,
+                        TimeSpan.FromMinutes(5));
+                }
+
             } catch(Exception ex) {
                 _logger.LogError(ex, "Error getting index");
             }
@@ -41,6 +62,13 @@ namespace WebApi.Pages
             _context.Products.Add(NewProduct);
             await _context.SaveChangesAsync();
 
+            // invalidate cache
+            if (_redis is not null)
+            {
+                var db = _redis.GetDatabase();
+                await db.KeyDeleteAsync(CacheKey);
+            }
+
             return RedirectToPage();
         }
 
@@ -52,6 +80,12 @@ namespace WebApi.Pages
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
 
+                // invalidate cache
+                if (_redis is not null)
+                {
+                    var db = _redis.GetDatabase();
+                    await db.KeyDeleteAsync(CacheKey);
+                }
             }
 
             return RedirectToPage();

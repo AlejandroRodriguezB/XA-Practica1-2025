@@ -29,16 +29,16 @@ correspondientes (puertos, credenciales, etc.).
 - [ ] Todos los contenedores deberán incluir un healthcheck configurado en el docker-compose.yml o en sus Dockerfile, que permita comprobar si el servicio está activo y respondiendo correctamente.
 - [X] El estado de salud deberá verse reflejado en la aplicación web mediante su endpoint /status.
 - El proyecto deberá implementar medidas básicas de seguridad:
-    - [ ] No incluir credenciales hardcodeadas en el código ni en los archivos YAML.
-    - [ ] Utilizar variables de entorno para contraseñas y configuración sensible.
-    - [ ] Evitar exponer puertos innecesarios.
-    - [ ] Aplicar permisos mínimos requeridos en los archivos de configuración.
-    - [ ] La automatización del despliegue es obligatoria.
+    - [X] No incluir credenciales hardcodeadas en el código ni en los archivos YAML.
+    - [X] Utilizar variables de entorno para contraseñas y configuración sensible.
+    - [X] Evitar exponer puertos innecesarios.
+    - [X] Aplicar permisos mínimos requeridos en los archivos de configuración.
+    - [X] La automatización del despliegue es obligatoria.
 - Se deberá incluir un Makefile o script bash (setup.sh, run.sh, etc.) que permita:
-    - [ ] Construir las imágenes
-    - [ ] Levantar el entorno (make up-dev, make up-prod)
-    - [ ] Detener y limpiar (make down)
-    - [ ] La persistencia de datos deberá demostrarse insertando información en la base de datos, eliminando el contenedor y volviendo a iniciarlo, verificando que los datos se mantienen.
+    - [X] Construir las imágenes
+    - [X] Levantar el entorno (make up-dev, make up-prod)
+    - [X] Detener y limpiar (make down)
+    - [X] La persistencia de datos deberá demostrarse insertando información en la base de datos, eliminando el contenedor y volviendo a iniciarlo, verificando que los datos se mantienen.
 
 # Explicación de los healthchecks
 >TODO: explicar
