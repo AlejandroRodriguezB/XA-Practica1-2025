@@ -17,10 +17,11 @@ Primero levantar Pro/Dev (revisar apartado de MAKEFILE más abajo), una vez hech
 
 ### Check web:
 `http://localhost:<WEB_PORT>`
+
 ![Index example image](Media/IndexEx.png)
 
-
 `http://localhost:<WEB_PORT>/status`
+
 ![Index example image](Media/StatusEx.png)
 
 
@@ -30,8 +31,8 @@ docker exec -it <id bd docker> psql -U <userBd> -d <nombreBd>
 
 select * from products;
 ```
-![Postgress example](Media/SqlEx.png)
 
+![Postgress example](Media/SqlEx.png)
 
 ### Check Redis:
 ```
@@ -39,6 +40,7 @@ docker exec -it <id redis docker> redis-cli
 KEYS *
 get <PreviouslyObtainedKey>
 ```
+
 ![Redis example](Media/redisEx.png)
 
 >En caso de que se quiera ejecutar solo la web en local sin docker se tendría que descargar net8.0 y rellenar el archivo .config (tanto de dev como pro) con los mismos campos de los .env comentados previamente.
@@ -54,6 +56,7 @@ Hay dos entornos completamente independientes entre ellos:
 ![Diagrama dev](Media/ArchDev.png)
 > Cliente-> WEB -> Postgress  (y vuelta)
 ## PRO
+
 ![Diagrama Pro](Media/ArchPro.png)
 >Cliente-> WEB -> Redis  (y vuelta si ya esta en cache) -> Postgress (y vuelta si ha llegado aqui actualizar cache))
 
